@@ -1,0 +1,25 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "FacebookScraper"
+version = "0.0.1"
+authors = [
+  { name="Ishan Surana", email="ishansurana1234@gmail.com" },
+]
+description = "A module designed to automate the extraction of follower counts and post details from a public Facebook page."
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache License 2.0",
+    "Operating System :: Windows",
+]
+dependencies = [
+    'selenium == 4.1.0',
+    'webdriver-manager == 4.0.1'
+]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/ishan-surana/FacebookScraper"
