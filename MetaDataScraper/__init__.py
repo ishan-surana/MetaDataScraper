@@ -11,12 +11,12 @@ from a public Facebook page. It uses Selenium WebDriver for web automation and s
 
 Classes:
 --------
-FacebookScraper
++ FacebookScraper
     A class to scrape followers count and post details from a public Facebook page. It does not require any authentication or API keys.
 
 Methods:
 ------------------------
-scrape(self) -> dict:
++ scrape(self) -> dict:
     Initiates the scraping process and returns a dictionary with the scraped data.
 
 Requirements:
@@ -26,14 +26,12 @@ Requirements:
 
 Usage:
 ------
+
+    ```python
     from MetaDataScraper import FacebookScraper
-
-    page_id = "your_facebook_page_id"
-
-    scraper = FacebookScraper(page_id)
-
+    scraper = FacebookScraper("page_id")
     data = scraper.scrape()
-
+    
     print(f"Followers: {data['followers']}")
     print(f"Post Texts: {data['post_texts']}")
     print(f"Post Likes: {data['post_likes']}")

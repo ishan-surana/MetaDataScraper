@@ -11,56 +11,57 @@ logging.getLogger().setLevel(logging.CRITICAL)
 class FacebookScraper:
     """
     A class to scrape information from a public Facebook page. It does not require any authentication or API keys.
+    
     Attributes
     ----------
-    page_id : str
+    + `page_id` : str
         The Facebook page ID to scrape information from.
-    driver : webdriver.Chrome
+    + `driver` : webdriver.Chrome
         The Selenium WebDriver instance.
-    followers : str
+    + `followers` : str
         The followers count of the Facebook page.
-    post_texts : list
+    + `post_texts` : list
         The list of texts from the posts.
-    post_likes : list
+    + `post_likes` : list
         The list of likes count for the posts.
-    post_shares : list
+    + `post_shares` : list
         The list of shares count for the posts.
-    is_video : list
+    + `is_video` : list
         The list indicating whether the post contains a video.
-    video_links : list
+    + `video_links` : list
         The list of video links if the post contains a video.
 
     Methods
     -------
-    scrape(self) -> dict:
+    `scrape`(self) -> dict:
         Initiates the scraping process and returns a dictionary with the scraped data.
 
     Returns
     -------
-    dict
-        A dictionary containing the following
-        - 'followers': str
-            The followers count of the Facebook page.
-        - 'post_texts': list
-            A list of texts from the posts.
-        - 'post_likes': list
-            A list of likes count for the posts.
-        - 'post_shares': list
-            A list of shares count for the posts.
-        - 'is_video': list
-            A list indicating whether the post contains a video.
-        - 'video_links': list
-            A list of video links if the post contains a video.
+    [dict]
+    A dictionary containing the following:-
+    + `followers` (str): 
+        The followers count of the Facebook page.
+    + `post_texts` (list):
+        A list of texts from the posts.
+    + `post_likes` (list):
+        A list of likes count for the posts.
+    + `post_shares` (list):
+        A list of shares count for the posts.
+    + `is_video` (list):
+        A list indicating whether the post contains a video.
+    + `video_links` (list):
+        A list of video links if the post contains a video.
 
     Example
     -------
     To scrape a Facebook page:
+
+        ```python
         from MetaDataScraper import FacebookScraper
-
         scraper = FacebookScraper("page_id")
-
         data = scraper.scrape()
-        
+
         print(f"Followers: {data['followers']}")
         print(f"Post Texts: {data['post_texts']}")
         print(f"Post Likes: {data['post_likes']}")
@@ -188,55 +189,60 @@ class FacebookScraper:
         c = 1
         error_count = 0
         while True:
-            xpath = self.xpath_first + str(c) + self.xpath_identifier_addum + self.xpath_last
+            xpath = self.xpath_first+str(c)+self.xpath_identifier_addum+self.xpath_last
             if not self.driver.find_elements(By.XPATH, xpath):
                 error_count += 1
                 if error_count < 3:
+                    print('Error extracting post', c, '\b. Retrying extraction...', end='\r')
                     time.sleep(5)
                     self.driver.execute_script("window.scrollBy(0, +20);")
                     continue
                 break
             error_count = 0
+            # Scroll until the post is visible
             self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_elements(By.XPATH, xpath)[0])
             if not self.driver.find_elements(By.XPATH, xpath):
                 error_count += 1
                 if error_count < 3:
+                    print('Error extracting post', c, '\b. Retrying extraction...', end='\r')
                     time.sleep(5)
                     self.driver.execute_script("window.scrollBy(0, +20);")
                     continue
                 break
             error_count = 0
+            print(" "*100, end='\r')
+            print('Extracting post', c, end='\r')
             post_components = self.driver.find_element(By.XPATH, xpath).find_elements(By.XPATH, './*')
             if len(post_components) > 2:
                 post_text = '\n'.join(post_components[2].text.split('\n'))
-                if post_components[3].text.split('\n')[0] == 'All reactions:':
-                    post_likes = post_components[3].text.split('\n')[1]
-                    if len(post_components[3].text.split('\n')) > 4:
-                        post_shares = post_components[3].text.split('\n')[4].split(' ')[0]
-                elif len(post_components) > 4 and post_components[4].text.split('\n')[0] == 'All reactions:':
-                    post_likes = post_components[4].text.split('\n')[1]
-                    post_shares = post_components[4].text.split('\n')[4].split(' ')[0]
+                if post_components[3].text.split('\n')[0]=='All reactions:':
+                    post_like = post_components[3].text.split('\n')[1]
+                    if len(post_components[3].text.split('\n'))>4:
+                        post_share = post_components[3].text.split('\n')[3].split(' ')[0]
+                elif len(post_components)>4 and post_components[4].text.split('\n')[0]=='All reactions:':
+                    post_like = post_components[4].text.split('\n')[1]
+                    post_share = post_components[4].text.split('\n')[4].split(' ')[0]
                 else:
-                    post_likes = 0
-                    post_shares = 0
+                    post_like = 0
+                    post_share = 0
                 self.post_texts.append(post_text)
-                self.post_likes.append(post_likes)
-                self.post_shares.append(post_shares)
+                self.post_likes.append(post_like)
+                self.post_shares.append(post_share)
             else:
                 try:
-                    post_shares = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
-                    c += 1
+                    post_share = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
                 except:
-                    c += 2
+                    c+=1
                     continue
-                post_likes = post_components[1].find_element(By.XPATH, './/*[@aria-label="Like"]').text
-                post_shares = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
+                post_like = post_components[1].find_element(By.XPATH, './/*[@aria-label="Like"]').text
+                post_share = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
+                time.sleep(1)
                 self.post_texts.append('')
-                self.post_likes.append(post_likes)
-                self.post_shares.append(post_shares)
+                self.post_likes.append(post_like)
+                self.post_shares.append(post_share)
             if len(self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'video')) > 0:
                 if 'reels' in self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'):
-                    self.video_links.append('https://www.facebook.com' + self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'))
+                    self.video_links.append('https://www.facebook.com'+self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'))
                 else:
                     self.video_links.append(self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[4].get_attribute('href'))
                 self.is_video.append(True)
@@ -259,17 +265,17 @@ class FacebookScraper:
         -------
         dict
             A dictionary containing the following keys:
-                - 'followers': str
+                + 'followers': str
                     The followers count of the Facebook page.
-                - 'post_texts': list
+                + 'post_texts': list
                     A list of texts from the posts.
-                - 'post_likes': list
+                + 'post_likes': list
                     A list of likes count for the posts.
-                - 'post_shares': list
+                + 'post_shares': list
                     A list of shares count for the posts.
-                - 'is_video': list
+                + 'is_video': list
                     A list indicating whether the post contains a video.
-                - 'video_links': list
+                + 'video_links': list
                     A list of video links if the post contains a video.
 
         Example
