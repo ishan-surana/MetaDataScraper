@@ -12,7 +12,7 @@ from a public Facebook page. It uses Selenium WebDriver for web automation and s
 Classes:
 --------
 FacebookScraper
-    A class to scrape followers count and post details from a public Facebook page.
+    A class to scrape followers count and post details from a public Facebook page. It does not require any authentication or API keys.
 
 Methods:
 ------------------------

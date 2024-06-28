@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import logging
@@ -9,8 +10,7 @@ logging.getLogger().setLevel(logging.CRITICAL)
 
 class FacebookScraper:
     """
-    A class to scrape information from a public Facebook page.
-
+    A class to scrape information from a public Facebook page. It does not require any authentication or API keys.
     Attributes
     ----------
     page_id : str
@@ -55,7 +55,7 @@ class FacebookScraper:
     Example
     -------
     To scrape a Facebook page:
-        from FacebookScraper import FacebookScraper
+        from MetaDataScraper import FacebookScraper
 
         scraper = FacebookScraper("page_id")
 
@@ -113,7 +113,6 @@ class FacebookScraper:
         Checks if the page is accessible. 
         If not, it quits the driver and raises an exception.
         """
-        from selenium.webdriver.common.keys import Keys
         self.driver.find_element(By.TAG_NAME, "html").send_keys(Keys.TAB)
         self.driver.find_element(By.TAG_NAME, "html").send_keys(Keys.SHIFT + Keys.TAB)
         self.driver.switch_to.active_element.click()
