@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "MetaDataScraper"
-version = "0.0.3"
+version = "1.0.0"
 authors = [
   { name="Ishan Surana", email="ishansurana1234@gmail.com" },
 ]
