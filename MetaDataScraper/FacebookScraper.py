@@ -59,14 +59,14 @@ class FacebookScraper:
 
         scraper = FacebookScraper("page_id")
 
-        result = scraper.scrape()
+        data = scraper.scrape()
         
-        print(f"Followers: {result['followers']}")
-        print(f"Post Texts: {result['post_texts']}")
-        print(f"Post Likes: {result['post_likes']}")
-        print(f"Post Shares: {result['post_shares']}")
-        print(f"Is Video: {result['is_video']}")
-        print(f"Video Links: {result['video_links']}")
+        print(f"Followers: {data['followers']}")
+        print(f"Post Texts: {data['post_texts']}")
+        print(f"Post Likes: {data['post_likes']}")
+        print(f"Post Shares: {data['post_shares']}")
+        print(f"Is Video: {data['is_video']}")
+        print(f"Video Links: {data['video_links']}")
     """
 
     def __init__(self, page_id: str):
@@ -278,14 +278,14 @@ class FacebookScraper:
         To scrape a Facebook page:
             scraper = FacebookScraper("page_id")
 
-            result = scraper.scrape()
+            data = scraper.scrape()
             
-            print(f"Followers: {result['followers']}")
-            print(f"Post Texts: {result['post_texts']}")
-            print(f"Post Likes: {result['post_likes']}")
-            print(f"Post Shares: {result['post_shares']}")
-            print(f"Is Video: {result['is_video']}")
-            print(f"Video Links: {result['video_links']}")
+            print(f"Followers: {data['followers']}")
+            print(f"Post Texts: {data['post_texts']}")
+            print(f"Post Likes: {data['post_likes']}")
+            print(f"Post Shares: {data['post_shares']}")
+            print(f"Is Video: {data['is_video']}")
+            print(f"Video Links: {data['video_links']}")
         """
         try:
             self.__setup_driver()
@@ -295,7 +295,7 @@ class FacebookScraper:
             self.__scroll_to_top()
             self.__get_xpath_constructor()
             self.__extract_post_details()
-
+            print("\033[A\033[A\033[A") # DevTools line deleter
             return {
                 'followers': self.followers,
                 'post_texts': self.post_texts,

@@ -1,25 +1,25 @@
-# FacebookScraper
+# MetaDataScraper
 
-FacebookScraper is a Python package designed to automate the extraction of information like follower counts, and post details & interactions from a public Facebook page. It uses Selenium WebDriver for web automation and scraping.
+MetaDataScraper is a Python package designed to automate the extraction of information like follower counts, and post details & interactions from a public Facebook page, in the form of a FacebookScraper object. It uses Selenium WebDriver for web automation and scraping.
 
 ## Installation
 
-You can install FacebookScraper using pip:
+You can install MetaDataScraper using pip:
 
 ```
-pip install FacebookScraper
+pip install MetaDataScraper
 ```
 
 Make sure you have Python 3.x and pip installed.
 
 ## Usage
 
-To use FacebookScraper, follow these steps:
+To use MetaDataScraper, follow these steps:
 
 1. Import the FacebookScraper class:
 
    ```python
-   from FacebookScraper import FacebookScraper
+   from MetaDataScraper import FacebookScraper
    ```
 
 2. Initialize the scraper with the Facebook page ID:

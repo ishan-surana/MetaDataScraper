@@ -1,12 +1,12 @@
 """
-FacebookScraper Module
+MetaDataScraper Module
 ----------------------
 
-This module provides a script `FacebookScraper` to scrape information from a public Facebook page.
+This module provides a script `MetaDataScraper` to scrape information from a public Facebook page.
 
 Overview:
 ---------
-The `FacebookScraper` module is designed to automate the extraction of follower counts and post details
+The `MetaDataScraper` module is designed to automate the extraction of follower counts and post details
 from a public Facebook page. It uses Selenium WebDriver for web automation and scraping.
 
 Classes:
@@ -26,20 +26,20 @@ Requirements:
 
 Usage:
 ------
-    from FacebookScraper import FacebookScraper
+    from MetaDataScraper import FacebookScraper
 
     page_id = "your_facebook_page_id"
 
     scraper = FacebookScraper(page_id)
 
-    result = scraper.scrape()
+    data = scraper.scrape()
 
-    print(f"Followers: {result['followers']}")
-    print(f"Post Texts: {result['post_texts']}")
-    print(f"Post Likes: {result['post_likes']}")
-    print(f"Post Shares: {result['post_shares']}")
-    print(f"Is Video: {result['is_video']}")
-    print(f"Video Links: {result['video_links']}")
+    print(f"Followers: {data['followers']}")
+    print(f"Post Texts: {data['post_texts']}")
+    print(f"Post Likes: {data['post_likes']}")
+    print(f"Post Shares: {data['post_shares']}")
+    print(f"Is Video: {data['is_video']}")
+    print(f"Video Links: {data['video_links']}")
 """
 
 from .FacebookScraper import FacebookScraper
