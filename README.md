@@ -58,4 +58,4 @@ To use MetaDataScraper, follow these steps:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/ishan-surana/MetaDataScraper/blob/main/LICENCE) file for details.
