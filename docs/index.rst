@@ -1,4 +1,4 @@
-Welcome to Lumache's documentation!
+Welcome to the MetaDataScraper documentation!
 ===================================
 
 MetaDataScraper is a Python package designed to automate the extraction of information like follower counts, and post details & interactions from a public Facebook page, in the form of a list. It uses Selenium WebDriver for web automation and scraping.  
