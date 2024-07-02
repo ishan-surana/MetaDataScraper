@@ -2,13 +2,12 @@
 
 ## Supported Versions
 
-Versions of  MetaDataScraper that are
+Versions of MetaDataScraper that are
 currently being supported with security updates:-
 
 | Version |Supported|
 | ------- | --------|
-| 1.0.1   |    ✅   |
-| 1.0.0   |    ✅   |
+| >=1.0.0 |    ✅   |
 | < 1.0   |    :x:  |
 
 ## Reporting a Vulnerability

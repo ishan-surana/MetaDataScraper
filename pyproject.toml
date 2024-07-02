@@ -8,6 +8,9 @@ version = "1.0.2"
 authors = [
   { name="Ishan Surana", email="ishansurana1234@gmail.com" },
 ]
+maintainers = [
+  { name="Ishan Surana", email="ishansurana1234@gmail.com" },
+]
 description = "A module designed to automate the extraction of follower counts and post details from a public Facebook page."
 readme = "README.md"
 classifiers = [
@@ -20,9 +23,11 @@ dependencies = [
     'webdriver-manager == 4.0.1'
 ]
 requires-python = ">=3.10"
-
-[tool.setuptools.dynamic]
-version = {attr = "MetaDataScraper.__version__"}
+keywords = ["facebook", "scraper", "meta", "selenium", "webdriver-manager", "automation", "web-scraping", "web-crawling", "web-automation", "facebook-scraper", "facebook-web-scraper", "meta-scraper"]
 
 [project.urls]
 Homepage = "https://metadatascraper.readthedocs.io/en/latest/"
+Documentation = "https://metadatascraper.readthedocs.io/en/latest/"
+Repository = "https://github.com/ishan-surana/MetaDataScraper"
+Changelog = "https://github.com/ishan-surana/MetaDataScraper/releases"
+Issues = "https://github.com/ishan-surana/MetaDataScraper/issues"
