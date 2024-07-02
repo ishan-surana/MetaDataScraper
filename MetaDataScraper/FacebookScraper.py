@@ -1,13 +1,12 @@
+import time
+import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-import logging
+from webdriver_manager.chrome import ChromeDriverManager
 logging.getLogger().setLevel(logging.CRITICAL)
 
 class LoginlessScraper:
@@ -471,7 +470,7 @@ class LoggedInScraper:
 
     def __get_xpath_constructor(self):
         """Constructs the XPath for locating posts on the Facebook page."""
-        xpath_return_script = r"""
+        _xpath_return_script = r"""
             var iterator = document.evaluate('.//*[@aria-label="Like"]', document);
             var firstelement = iterator.iterateNext()
             var firstpost = firstelement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
@@ -509,79 +508,79 @@ class LoggedInScraper:
             }
             return xpath_first
         """
-        xpath_constructor = self.driver.execute_script(xpath_return_script)
-        split_xpath = xpath_constructor.split('[')
-        split_index = split_xpath.index('1]/div/div/div/div/div/div/div/div/div/div/div')
-        self.xpath_first = '['.join(split_xpath[:split_index])+'['
-        self.xpath_last = '['+'['.join(split_xpath[split_index+1:])
-        self.xpath_identifier_addum = ']/div/div/div/div/div/div/div/div/div/div/div'
-        if len(self.driver.find_element(By.XPATH, xpath_constructor).find_elements(By.TAG_NAME, 'video')):
-            self.xpath_last = '/'.join(self.xpath_last.split('/')[:3])
+        _xpath_constructor = self.driver.execute_script(_xpath_return_script)
+        _split_xpath = _xpath_constructor.split('[')
+        _split_index = _split_xpath.index('1]/div/div/div/div/div/div/div/div/div/div/div')
+        self._xpath_first = '['.join(_split_xpath[:_split_index])+'['
+        self._xpath_last = '['+'['.join(_split_xpath[_split_index+1:])
+        self._xpath_identifier_addum = ']/div/div/div/div/div/div/div/div/div/div/div'
+        if len(self.driver.find_element(By.XPATH, _xpath_constructor).find_elements(By.TAG_NAME, 'video')):
+            self._xpath_last = '/'.join(self._xpath_last.split('/')[:3])
 
     def __extract_post_details(self):
         """Extracts details of posts including text, likes, shares, and video links."""
-        c = 1
-        error_count = 0
+        _c = 1
+        _error_count = 0
         while True:
-            xpath = self.xpath_first + str(c) + self.xpath_identifier_addum + self.xpath_last
-            if not self.driver.find_elements(By.XPATH, xpath):
-                error_count += 1
-                if error_count < 3:
-                    print('Error extracting post', c, '\b. Count', error_count,'Retrying extraction...', end='\r')
+            _xpath = self._xpath_first + str(c) + self._xpath_identifier_addum + self._xpath_last
+            if not self.driver.find_elements(By.XPATH, _xpath):
+                _error_count += 1
+                if _error_count < 3:
+                    print('Error extracting post', _c, '\b. Count', _error_count,'Retrying extraction...', end='\r')
                     time.sleep(5)
                     self.driver.execute_script("window.scrollBy(0, +40);")
                     continue
                 break
-            error_count = 0
+            _error_count = 0
             print(" "*100, end='\r')
-            print("Extracting data of post", c, end='\r')
-            self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_elements(By.XPATH, xpath)[0])
-            post_components = self.driver.find_element(By.XPATH, xpath).find_elements(By.XPATH, './*')
-            if len(post_components) > 2:
-                post_text = '\n'.join(post_components[2].text.split('\n'))
-                if post_components[3].text.split('\n')[0] == 'All reactions:':
-                    post_likes = post_components[3].text.split('\n')[1]
-                    if len(post_components[3].text.split('\n')) > 4:
-                        post_shares = post_components[3].text.split('\n')[4].split(' ')[0]
-                elif len(post_components) > 4 and post_components[4].text.split('\n')[0] == 'All reactions:':
-                    post_likes = post_components[4].text.split('\n')[1]
-                    if len(post_components[4].text.split('\n')) > 4:
-                        post_shares = post_components[4].text.split('\n')[4].split(' ')[0]
+            print("Extracting data of post", _c, end='\r')
+            self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_elements(By.XPATH, _xpath)[0])
+            _post_components = self.driver.find_element(By.XPATH, _xpath).find_elements(By.XPATH, './*')
+            if len(_post_components) > 2:
+                _post_text = '\n'.join(_post_components[2].text.split('\n'))
+                if _post_components[3].text.split('\n')[0] == 'All reactions:':
+                    _post_like = _post_components[3].text.split('\n')[1]
+                    if len(_post_components[3].text.split('\n')) > 4:
+                        _post_share = _post_components[3].text.split('\n')[4].split(' ')[0]
+                elif len(_post_components) > 4 and _post_components[4].text.split('\n')[0] == 'All reactions:':
+                    _post_like = _post_components[4].text.split('\n')[1]
+                    if len(_post_components[4].text.split('\n')) > 4:
+                        _post_share = _post_components[4].text.split('\n')[4].split(' ')[0]
                 else:
-                    post_likes = 0
-                    post_shares = 0
-                self.post_texts.append(post_text)
-                self.post_likes.append(post_likes if post_likes else 0)
-                self.post_shares.append(post_shares if post_shares else 0)
-            elif len(post_components) == 2:
+                    _post_like = 0
+                    _post_share = 0
+                self.post_texts.append(_post_text)
+                self.post_likes.append(_post_like if _post_like else 0)
+                self.post_shares.append(_post_share if _post_share else 0)
+            elif len(_post_components) == 2:
                 try:
-                    post_shares = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
+                    _post_share = _post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
                 except:
-                    print("Some error occurred while extracting post", c, ". Skipping post...", end='\r')
-                    c += 1
+                    print("Some error occurred while extracting post", _c, ". Skipping post...", end='\r')
+                    _c += 1
                     continue
-                post_likes = post_components[1].find_element(By.XPATH, './/*[@aria-label="Like"]').text
-                post_shares = post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
+                _post_like = _post_components[1].find_element(By.XPATH, './/*[@aria-label="Like"]').text
+                _post_share = _post_components[1].find_element(By.XPATH, './/*[@aria-label="Share"]').text
                 self.post_texts.append('')
-                self.post_likes.append(post_likes if post_likes else 0)
-                self.post_shares.append(post_shares if post_shares else 0)
-            elif len(post_components) == 1:
-                post_text = post_components[0].text.split('\n')[0]
-                post_likes = post_components[0].find_element(By.XPATH, './/*[@aria-label="Like"]').text
-                post_shares = post_components[0].find_element(By.XPATH, './/*[@aria-label="Share"]').text
-                self.post_texts.append(post_text)
-                self.post_likes.append(post_likes if post_likes else 0)
-                self.post_shares.append(post_shares if post_shares else 0)
-            if len(self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'video')) > 0:
-                if 'reel' in self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'):
-                    self.video_links.append('https://www.facebook.com' + self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'))
+                self.post_likes.append(_post_like if _post_like else 0)
+                self.post_shares.append(_post_share if _post_share else 0)
+            elif len(_post_components) == 1:
+                _post_text = _post_components[0].text.split('\n')[0]
+                _post_like = _post_components[0].find_element(By.XPATH, './/*[@aria-label="Like"]').text
+                _post_share = _post_components[0].find_element(By.XPATH, './/*[@aria-label="Share"]').text
+                self.post_texts.append(_post_text)
+                self.post_likes.append(_post_like if _post_like else 0)
+                self.post_shares.append(_post_share if _post_share else 0)
+            if len(self.driver.find_elements(By.XPATH, _xpath)[0].find_elements(By.TAG_NAME, 'video')) > 0:
+                if 'reel' in self.driver.find_elements(By.XPATH, _xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'):
+                    self.video_links.append('https://www.facebook.com' + self.driver.find_elements(By.XPATH, _xpath)[0].find_elements(By.TAG_NAME, 'a')[0].get_attribute('href'))
                 else:
-                    self.video_links.append(self.driver.find_elements(By.XPATH, xpath)[0].find_elements(By.TAG_NAME, 'a')[4].get_attribute('href'))
+                    self.video_links.append(self.driver.find_elements(By.XPATH, _xpath)[0].find_elements(By.TAG_NAME, 'a')[4].get_attribute('href'))
                 self.is_video.append(True)
             else:
                 self.is_video.append(False)
                 self.video_links.append('')
-            c += 1
+            _c += 1
 
         self.post_likes = [int(i) if str(i).isdigit() else 0 for i in self.post_likes]
         self.post_shares = [int(i) if str(i).isdigit() else 0 for i in self.post_shares]
