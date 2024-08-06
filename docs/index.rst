@@ -1,3 +1,9 @@
+:html_theme.sidebar_secondary.remove:
+.. MetaDataScraper documentation master file, created by
+   sphinx-quickstart on Sun Aug  4 20:19:27 2024.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
 Welcome to the MetaDataScraper documentation!
 ===================================
 
@@ -13,5 +19,14 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 2
 
    README
+
+.. seealso::
+
+   Source Repository
+    `GitHub <https://github.com/ishan-surana/MetaDataScraper>`_
+
+   Sponsorship
+    `Sponsorship <https://github.com/sponsors/ishan-surana>`_

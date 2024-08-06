@@ -58,7 +58,8 @@ class LoginlessScraper:
     -------
     To scrape a Facebook page:
 
-        ```python
+    ```python
+
         from MetaDataScraper import LoginlessScraper
         scraper = LoginlessScraper("page_id")
         data = scraper.scrape()
@@ -190,7 +191,10 @@ class LoginlessScraper:
         _c = 1
         _error_count = 0
         while True:
-            _xpath = self._xpath_first+str(c)+self._xpath_identifier_addum+self._xpath_last
+            if _c > 100:
+                print("Reached 100 posts. Exiting extraction...\n\n")
+                break
+            _xpath = self._xpath_first+str(_c)+self._xpath_identifier_addum+self._xpath_last
             if not self.driver.find_elements(By.XPATH, _xpath):
                 _error_count += 1
                 if _error_count < 3:
@@ -368,7 +372,8 @@ class LoggedInScraper:
     -------
     To scrape a Facebook page:
 
-        ```python
+    ```python
+
         from MetaDataScraper import LoggedInScraper
         scraper = LoggedInScraper("page_id", "email", "password")
         data = scraper.scrape()
@@ -422,23 +427,22 @@ class LoggedInScraper:
 
     def __login(self):
         """Logs into Facebook using the provided credentials."""
-        logged_in = False
-        while not logged_in:
-            if self.driver.find_elements(By.ID, 'not_me_link'):
-                self.driver.find_element(By.ID, 'not_me_link').click()
-            self.driver.get('https://www.facebook.com/login')
-            self.driver.find_element(By.NAME, 'email').clear()
-            self.driver.find_element(By.NAME, 'email').send_keys(self.email)
-            self.driver.find_element(By.NAME, 'pass').clear()
-            self.driver.find_element(By.NAME, 'pass').send_keys(self.password)
-            self.driver.find_element(By.ID, 'loginbutton').click()
-            # Wait until the login process is completed
-            WebDriverWait(self.driver, 10).until(EC.url_changes('https://www.facebook.com/login'))
-            if self.driver.current_url != 'https://www.facebook.com/?sk=welcome':
-                print("Invalid credentials. Please try again.", end='\r')
-            else:
-                print(" "*100, end='\r')
-                logged_in = True
+        self._logged_in = False
+        if self.driver.find_elements(By.ID, 'not_me_link'):
+            self.driver.find_element(By.ID, 'not_me_link').click()
+        self.driver.get('https://www.facebook.com/login')
+        self.driver.find_element(By.NAME, 'email').clear()
+        self.driver.find_element(By.NAME, 'email').send_keys(self.email)
+        self.driver.find_element(By.NAME, 'pass').clear()
+        self.driver.find_element(By.NAME, 'pass').send_keys(self.password)
+        self.driver.find_element(By.ID, 'loginbutton').click()
+        # Wait until the login process is completed
+        WebDriverWait(self.driver, 10).until(EC.url_changes('https://www.facebook.com/login'))
+        if self.driver.current_url != 'https://www.facebook.com/?sk=welcome':
+            raise Exception("Invalid credentials. Please try again.")
+        else:
+            print(" "*100, end='\r')
+            self._logged_in = True
 
     def __navigate_to_page(self):
         """Navigates to the specified Facebook page."""
@@ -522,7 +526,7 @@ class LoggedInScraper:
         _c = 1
         _error_count = 0
         while True:
-            _xpath = self._xpath_first + str(c) + self._xpath_identifier_addum + self._xpath_last
+            _xpath = self._xpath_first + str(_c) + self._xpath_identifier_addum + self._xpath_last
             if not self.driver.find_elements(By.XPATH, _xpath):
                 _error_count += 1
                 if _error_count < 3:
@@ -587,6 +591,7 @@ class LoggedInScraper:
 
     def scrape(self):
         """Initiates the scraping process and returns a dictionary with the scraped data."""
+        self._logged_in = False
         self.__setup_driver()
         self.__login()
         self.__navigate_to_page()
@@ -595,8 +600,8 @@ class LoggedInScraper:
         self.__scroll_to_top()
         self.__get_xpath_constructor()
         self.__extract_post_details()
-        self.driver.quit()
         print("\033[A\033[A\033[A") # DevTools line deleter
+        self.driver.quit()
         return {
             'followers': self.followers,
             'post_texts': self.post_texts,

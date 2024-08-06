@@ -1,9 +1,15 @@
 Metadata-Version: 2.1
 Name: MetaDataScraper
-Version: 1.0.2
+Version: 1.0.3
 Summary: A module designed to automate the extraction of follower counts and post details from a public Facebook page.
 Author-email: Ishan Surana <ishansurana1234@gmail.com>
+Maintainer-email: Ishan Surana <ishansurana1234@gmail.com>
 Project-URL: Homepage, https://metadatascraper.readthedocs.io/en/latest/
+Project-URL: Documentation, https://metadatascraper.readthedocs.io/en/latest/
+Project-URL: Repository, https://github.com/ishan-surana/MetaDataScraper
+Project-URL: Changelog, https://github.com/ishan-surana/MetaDataScraper/releases
+Project-URL: Issues, https://github.com/ishan-surana/MetaDataScraper/issues
+Keywords: facebook,scraper,meta,selenium,webdriver-manager,automation,web-scraping,web-crawling,web-automation,facebook-scraper,facebook-web-scraper,meta-scraper
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: Apache Software License
 Classifier: Operating System :: Microsoft :: Windows
