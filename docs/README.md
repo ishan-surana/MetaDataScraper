@@ -26,13 +26,25 @@ To use MetaDataScraper, follow these steps:
 
 2. Initialize the scraper with the Facebook page ID:
 
+::::{tab-set}
+
+:::{tab-item} Loginless
    ```python
    page_id = "your_target_page_id"
    scraper = LoginlessScraper(page_id)
+   ```
+:::
+
+:::{tab-item} LoggedIn
+   ```python
+   page_id = "your_target_page_id"
    email = "your_facebook_email"
    password = "your_facebook_password"
    scraper = LoggedInScraper(page_id, email, password)
    ```
+:::
+
+::::
 
 3. Scrape the Facebook page to retrieve information:
 
