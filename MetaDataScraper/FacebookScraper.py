@@ -413,6 +413,7 @@ class LoggedInScraper:
         self.post_shares = []
         self.is_video = []
         self.video_links = []
+        self._logged_in = False
 
     def __setup_driver(self):
         """Sets up the Selenium WebDriver with necessary options."""
@@ -427,7 +428,6 @@ class LoggedInScraper:
 
     def __login(self):
         """Logs into Facebook using the provided credentials."""
-        self._logged_in = False
         if self.driver.find_elements(By.ID, 'not_me_link'):
             self.driver.find_element(By.ID, 'not_me_link').click()
         self.driver.get('https://www.facebook.com/login')

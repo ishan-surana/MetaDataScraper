@@ -1,6 +1,7 @@
 LICENCE
 README.md
 pyproject.toml
+setup.py
 MetaDataScraper/FacebookScraper.py
 MetaDataScraper/__init__.py
 MetaDataScraper.egg-info/PKG-INFO
@@ -8,3 +9,5 @@ MetaDataScraper.egg-info/SOURCES.txt
 MetaDataScraper.egg-info/dependency_links.txt
 MetaDataScraper.egg-info/requires.txt
 MetaDataScraper.egg-info/top_level.txt
+tests/test_logged_in_scraper.py
+tests/test_loginless_scraper.py

@@ -1,10 +1,10 @@
 [build-system]
-requires      = ["setuptools>=61.0.0", "wheel"]
+requires      = ["wheel", "setuptools>=61.0.0", "pytest==8.3.2", "pytest-mock==3.14.0", "selenium==4.23.0", "webdriver-manager==4.0.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "MetaDataScraper"
-version = "1.0.3"
+version = "1.0.4"
 authors = [
   { name="Ishan Surana", email="ishansurana1234@gmail.com" },
 ]
@@ -19,8 +19,8 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
 ]
 dependencies = [
-    'selenium == 4.1.0',
-    'webdriver-manager == 4.0.1'
+    'selenium==4.23.0',
+    'webdriver-manager==4.0.2'
 ]
 requires-python = ">=3.10"
 keywords = ["facebook", "scraper", "meta", "selenium", "webdriver-manager", "automation", "web-scraping", "web-crawling", "web-automation", "facebook-scraper", "facebook-web-scraper", "meta-scraper"]
