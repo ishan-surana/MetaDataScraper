@@ -39,10 +39,7 @@ jobs:
           cp docs/* source/
           python -m pip install --upgrade pip
           python -m pip install build sphinx sphinx-copybutton sphinx_design pydata-sphinx-theme
-          cd source
-          ls
-          pwd
-          source/make html
+          source\make html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
