@@ -40,14 +40,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install build sphinx sphinx-copybutton sphinx_design pydata-sphinx-theme
           cd docs
-          docs/make html
+          make html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './source'
+          path: 'docs/source'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
