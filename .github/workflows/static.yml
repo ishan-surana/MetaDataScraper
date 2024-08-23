@@ -36,14 +36,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install build sphinx sphinx-copybutton sphinx_design pydata-sphinx-theme myst_parser
           sphinx-build docs html
-          ls -lr
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './docs/html/'
+          path: './html/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
