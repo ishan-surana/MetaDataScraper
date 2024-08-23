@@ -27,16 +27,14 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install dependencies and build pages
         run: |
-          python --version
-          python3 --version
           python -m pip install --upgrade pip
-          python -m pip install build sphinx==8.0.2 sphinx-copybutton sphinx_design pydata-sphinx-theme myst_parser
+          python -m pip install build sphinx sphinx-copybutton sphinx_design pydata-sphinx-theme myst_parser
           sphinx-build docs html
       - name: Setup Pages
         uses: actions/configure-pages@v5
