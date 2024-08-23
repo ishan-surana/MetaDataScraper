@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies and build pages
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install build sphinx==8.0.2 sphinx-copybutton sphinx_design pydata-sphinx-theme myst_parser
+          python3 -m pip install build sphinx>8 sphinx-copybutton sphinx_design pydata-sphinx-theme myst_parser
           sphinx-build docs html
       - name: Setup Pages
         uses: actions/configure-pages@v5
