@@ -33,13 +33,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies and build pages
         run: |
-          ls
-          pwd
+          cd docs
           mkdir source
-          cp docs/* source/
+          cp ./* source/
           python -m pip install --upgrade pip
           python -m pip install build sphinx sphinx-copybutton sphinx_design pydata-sphinx-theme
-          source\make html
+          make html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
